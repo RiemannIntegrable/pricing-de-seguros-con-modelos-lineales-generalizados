@@ -1,4 +1,5 @@
-# La estructura visual básica - solo una página
 ui <- fluidPage(
-  source("ui/ui_pricing.R", local = TRUE)$value
+  titlePanel("Predictor Simple"),
+  numericInput("valor_x", "Ingrese valor de X:", value = 0),
+  textOutput("prediccion_y")
 )
