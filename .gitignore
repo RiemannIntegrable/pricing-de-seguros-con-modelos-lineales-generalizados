@@ -53,6 +53,9 @@ renv/staging/
 !/data/.gitkeep
 !/data/*/.gitkeep
 !/data/**/.gitkeep
+# Permitir archivos de input
+!/data/input/
+!/data/input/*.csv
 
 # Modelos guardados (opcional - descomenta si no quieres versionarlos)
 /models/*.rds
@@ -129,7 +132,7 @@ tasks.txt
 *.hdf5
 *.sqlite
 *.db
-*.csv
+#*.csv
 
 
 # Pero permitir archivos de input específicos
