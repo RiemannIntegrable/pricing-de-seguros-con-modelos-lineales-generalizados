@@ -133,7 +133,3 @@ tasks.txt
 *.sqlite
 *.db
 #*.csv
-
-
-# Pero permitir archivos de input específicos
-!data/input/*.csv
