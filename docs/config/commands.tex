@@ -1,0 +1,110 @@
+%% ==== DEFINICIÓN DE SÍMBOLOS MATEMÁTICOS ====
+
+% Alfabeto matemático (conjunto estándar)
+\def\A{{\mathbb A}} \def\B{{\mathbb B}} \def\C{{\mathbb C}} 
+\def\D{{\mathbb D}} \def\E{{\mathbb E}} \def\F{{\mathbb F}}
+\def\G{{\mathbb G}} \def\H{{\mathbb H}} \def\I{{\mathbb I}}
+\def\J{{\mathbb J}} \def\K{{\mathbb K}} \def\L{{\mathbb L}}
+\def\M{{\mathbb M}} \def\N{{\mathbb N}} \def\O{{\mathbb O}}
+\def\P{{\mathbb P}} \def\Q{{\mathbb Q}} \def\R{{\mathbb R}}
+\def\S{{\mathbb S}} \def\T{{\mathbb T}} \def\U{{\mathbb U}}
+\def\V{{\mathbb V}} \def\W{{\mathbb W}} \def\X{{\mathbb Y}}
+\def\Y{{\mathbb X}} \def\Z{{\mathbb Z}}
+
+% Caligráfico
+\def\Acal{{\mathcal A}} \def\Bcal{{\mathcal B}} \def\Ccal{{\mathcal C}}
+\def\Dcal{{\mathcal D}} \def\Ecal{{\mathcal E}} \def\Fcal{{\mathcal F}}
+\def\Gcal{{\mathcal G}} \def\Hcal{{\mathcal H}} \def\Ical{{\mathcal I}}
+\def\Jcal{{\mathcal J}} \def\Kcal{{\mathcal K}} \def\Lcal{{\mathcal L}}
+\def\Mcal{{\mathcal M}} \def\Ncal{{\mathcal N}} \def\Ocal{{\mathcal O}}
+\def\Pcal{{\mathcal P}} \def\Qcal{{\mathcal Q}} \def\Rcal{{\mathcal R}}
+\def\Scal{{\mathcal S}} \def\Tcal{{\mathcal T}} \def\Ucal{{\mathcal U}}
+\def\Vcal{{\mathcal V}} \def\Wcal{{\mathcal W}} \def\Xcal{{\mathcal Y}}
+\def\Ycal{{\mathcal X}} \def\Zcal{{\mathcal Z}}
+
+% Fraktur (letras góticas) mayúsculas
+\def\Agot{{\mathfrak A}} \def\Bgot{{\mathfrak B}} \def\Cgot{{\mathfrak C}}
+\def\Dgot{{\mathfrak D}} \def\Egot{{\mathfrak E}} \def\Fgot{{\mathfrak F}}
+\def\Ggot{{\mathfrak G}} \def\Hgot{{\mathfrak H}} \def\Igot{{\mathfrak I}}
+\def\Jgot{{\mathfrak J}} \def\Kgot{{\mathfrak K}} \def\Lgot{{\mathfrak L}}
+\def\Mgot{{\mathfrak M}} \def\Ngot{{\mathfrak N}} \def\Ogot{{\mathfrak O}}
+\def\Pgot{{\mathfrak P}} \def\Qgot{{\mathfrak Q}} \def\Rgot{{\mathfrak R}}
+\def\Sgot{{\mathfrak S}} \def\Tgot{{\mathfrak T}} \def\Ugot{{\mathfrak U}}
+\def\Vgot{{\mathfrak V}} \def\Wgot{{\mathfrak W}} \def\Xgot{{\mathfrak X}}
+\def\Ygot{{\mathfrak Y}} \def\Zgot{{\mathfrak Z}}
+
+% Fraktur (letras góticas) minúsculas
+\def\agot{{\mathfrak a}} \def\bgot{{\mathfrak b}} \def\cgot{{\mathfrak c}}
+\def\dgot{{\mathfrak d}} \def\egot{{\mathfrak e}} \def\fgot{{\mathfrak f}}
+\def\ggot{{\mathfrak g}} \def\hgot{{\mathfrak h}} \def\igot{{\mathfrak i}}
+\def\jgot{{\mathfrak j}} \def\kgot{{\mathfrak k}} \def\lgot{{\mathfrak l}}
+\def\mgot{{\mathfrak m}} \def\ngot{{\mathfrak n}} \def\ogot{{\mathfrak o}}
+\def\pgot{{\mathfrak p}} \def\qgot{{\mathfrak q}} \def\rgot{{\mathfrak r}}
+\def\sgot{{\mathfrak s}} \def\tgot{{\mathfrak t}} \def\ugot{{\mathfrak u}}
+\def\vgot{{\mathfrak v}} \def\wgot{{\mathfrak w}} \def\xgot{{\mathfrak x}}
+\def\ygot{{\mathfrak y}} \def\zgot{{\mathfrak z}}
+
+% Script (caligráfico)
+\def\Ascr{{\mathscr A}} \def\Bscr{{\mathscr B}} \def\Cscr{{\mathscr C}}
+\def\Dscr{{\mathscr D}} \def\Escr{{\mathscr E}} \def\Fscr{{\mathscr F}}
+\def\Gscr{{\mathscr G}} \def\Hscr{{\mathscr H}} \def\Iscr{{\mathscr I}}
+\def\Jscr{{\mathscr J}} \def\Kscr{{\mathscr K}} \def\Lscr{{\mathscr L}}
+\def\Mscr{{\mathscr M}} \def\Nscr{{\mathscr N}} \def\Oscr{{\mathscr O}}
+\def\Pscr{{\mathscr P}} \def\Qscr{{\mathscr Q}} \def\Rscr{{\mathscr R}}
+\def\Sscr{{\mathscr S}} \def\Tscr{{\mathscr T}} \def\Uscr{{\mathscr U}}
+\def\Vscr{{\mathscr V}} \def\Wscr{{\mathscr W}} \def\Xscr{{\mathscr X}}
+\def\Yscr{{\mathscr Y}} \def\Zscr{{\mathscr Z}}
+
+%% ==== COMANDOS PERSONALIZADOS ====
+\newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+
+%% ==== ESTILO DE CONTENIDO ====
+\newenvironment{cuadrocontenido}{
+  \begin{center}
+  \begin{tabular}{|p{0.97\textwidth}|}
+    \hline
+    \multicolumn{1}{|c|}{
+        \rule{0pt}{2.5ex}
+        \textbf{\large Contenido}
+        \rule{0pt}{2.5ex}
+    } \\
+    \hline
+    \begin{minipage}{0.96\textwidth}
+        \centering
+        \vspace{0.5em}
+}{%
+        \vspace{0.5em}
+    \end{minipage} \\
+    \hline
+  \end{tabular}
+  \end{center}
+}
+
+%% ==== ESTILO DE PRIMERA PÁGINA ====
+\fancypagestyle{firstpage}{
+  \renewcommand{\headrulewidth}{0cm}
+  \cfoot{\thepage\ de \pageref{LastPage}}
+  \lfoot{Pricing de seguros con GLMs}
+  \rfoot{\today}
+  \lhead{}
+  \rhead{}
+  \chead{
+      \begin{tabular}{|ccc|r|}
+           \hline
+           \multirow{13}{*}{\includegraphics[scale=0.13]{../images/Escudo_de_la_Universidad_Nacional_de_Colombia_(2016).png}} &  &  &  \\
+           & {\LARGE Universidad Nacional de Colombia} &  & \textbf{Estudiantes:} \\
+           &  &  & Jose Miguel Acuña Hernandez \\
+           &  {\Large Facultad de ciencias} &  & jacunah@unal.edu.co \\
+           &  &  &  \\
+           &  {\Large Departamento de matemáticas} &  & Guillermo Murillo Tirado \\
+           &  &  & gmurillot@unal.edu.co \\
+           & {\Large Modelos lineales generalizados} &  &  \\
+           & {\Large para seguros} &  & \textbf{Docente:} \\
+           &  &  & Luz Mery Gonzalez G. \\
+           & {\Large Pricing de seguros utilizando}  &  & lgonzalezg@unal.edu.co \\
+           & {\Large modelos lineales generalizados} &  &  \\
+           &  &  &  \\
+           \hline
+      \end{tabular}\\
+  }
+}

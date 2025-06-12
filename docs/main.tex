@@ -1,0 +1,21 @@
+\documentclass{article}
+
+% Importar configuración
+\input{config/preamble}
+\input{config/commands}
+\input{config/styles}
+
+\begin{document}
+
+\thispagestyle{firstpage}
+\vspace*{10\baselineskip}
+
+% Tabla de contenidos
+\renewcommand{\contentsname}{}
+\begin{cuadrocontenido}
+  \tableofcontents
+\end{cuadrocontenido}
+
+\input{content/punto1}
+
+\end{document}

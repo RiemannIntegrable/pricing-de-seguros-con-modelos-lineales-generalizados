@@ -1,0 +1,103 @@
+%% ==== CONFIGURACIÓN DE CÓDIGO ====
+\usepackage{lmodern}
+\usepackage{inconsolata}
+\usepackage{FiraMono}
+
+%% ==== CONFIGURACIÓN DE CÓDIGO ASCII ====
+\lstdefinestyle{directorytree}{
+  columns=fullflexible,
+  frame=single,
+  backgroundcolor=\color{white},
+  breaklines=false,
+  captionpos=b,
+  keepspaces=true,
+  showstringspaces=false,
+  tabsize=1,
+  lineskip=1pt,
+  basewidth=0.5em
+}
+
+%% ==== CONFIGURACIÓN DE CÓDIGO PYTHON ====
+\lstdefinelanguage{Python}{
+    morekeywords={def, return, if, elif, else, for, while, break, continue, pass, import, from, as, class, try, except, finally, with, lambda, yield, True, False, None, in, is, not, and, or, global, nonlocal, assert, del, raise, print},
+    otherkeywords={self},
+    keywordstyle=\color{blue!70!black}\bfseries,
+    comment=[l]{\#},
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!60!black},
+    morestring=[b]',
+    morestring=[b]",
+    showstringspaces=false,
+    sensitive=true
+}
+
+\lstdefinestyle{PyOutput}{
+    backgroundcolor=\color{black!3},
+    breaklines=true,
+    frame=leftline,
+    framerule=3pt,
+    rulecolor=\color{green!60!black},
+    framesep=3pt,
+    numberstyle=\tiny\color{gray},
+    numbers=none,
+    commentstyle={},
+    keywordstyle={},
+    stringstyle={},
+    moredelim=**[is][\color{darkgreen!90!black}\bfseries]{@@}{@@},
+    captionpos=f,
+    aboveskip=1.2em,
+    belowskip=1.2em,
+    boxpos=t
+}
+
+%% ==== CONFIGURACIÓN DE CÓDIGO R ====
+\lstdefinelanguage{R} {
+    morekeywords={if, else, repeat, while, function, for, in, next, break, return, library, require, data.frame},
+    otherkeywords={TRUE, FALSE, NULL, NA, NaN, Inf},
+    keywordstyle=\color{blue!70!black}\bfseries,
+    comment=[l]{\#},
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!60!black},
+    morestring=[b]',
+    morestring=[b]",
+    showstringspaces=false,
+    sensitive=true,
+    alsoletter={.}
+}
+
+\lstdefinestyle{Routput}{
+    backgroundcolor=\color{black!3},
+    breaklines=true,
+    frame=leftline,
+    framerule=3pt,
+    rulecolor=\color{green!60!black},
+    framesep=3pt,
+    numberstyle=\tiny\color{gray},
+    numbers=none,
+    commentstyle={},
+    keywordstyle={},
+    stringstyle={},
+    moredelim=**[is][\color{darkgreen!90!black}\bfseries]{@@}{@@},
+    captionpos=f,
+    aboveskip=1.2em,
+    belowskip=1.2em,
+    boxpos=t
+}
+
+\lstset{
+    language=R,    
+    basicstyle=\small\ttfamily\linespread{1.1}\selectfont,
+    backgroundcolor=\color{black!3},
+    frame=leftline,
+    framerule=3pt,
+    rulecolor=\color{teal!60!blue},
+    breaklines=true,
+    captionpos=f,
+    numberstyle=\tiny\color{gray!80!black},
+    numbers=none,
+    aboveskip=1.2em,
+    belowskip=1.2em,
+    xleftmargin=5pt,
+    xrightmargin=5pt,
+    framesep=3pt
+}
