@@ -59,28 +59,21 @@ renv/staging/
 /models/*.RData
 /models/*.pkl
 
-# Imágenes generadas (opcional - descomenta si no quieres versionarlas)
-/images/*.png
-/images/*.jpg
-/images/*.pdf
-/images/*.svg
-# Pero siempre mantener
-!/images/.gitkeep
-
 # Generados por tex
-tex/*
-!tex/*.tex
-!tex/*.bib
-!tex/*.cls
-!tex/*.sty
 *.aux
+*.auxlock
 *.bbl
+*.bbl-SAVE-ERROR\href{https://github.com/RiemannIntegrable/pricing-de-seguros-con-modelos-lineales-generalizados}{Repositorio de GitHub}
+*.bcf
 *.blg
 *.fdb_latexmk
 *.fls
+*.log
 *.out
-*.toc
+*.run.xml
 *.synctex.gz
+*.toc
+*.xdv
 *.nav
 *.snm
 *.vrb
@@ -125,7 +118,6 @@ tasks.txt
 *_files/
 
 # Archivos grandes de datos comunes
-*.csv
 *.xlsx
 *.xls
 *.sav
@@ -137,7 +129,8 @@ tasks.txt
 *.hdf5
 *.sqlite
 *.db
+*.csv
 
-# Pero permitir archivos de ejemplo pequeños
-!examples/*.csv
-!test_data/*.csv
+
+# Pero permitir archivos de input específicos
+!data/input/*.csv
