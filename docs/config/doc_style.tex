@@ -1,0 +1,75 @@
+%% ==== CONFIGURACIÓN DE PÁGINA ====
+\usepackage[papersize={216mm, 279mm},tmargin=20mm,bmargin=20mm,lmargin=20mm,rmargin=20mm]{geometry}
+\setlength{\parindent}{0mm}
+
+%% ==== CONFIGURACIÓN DE FUENTES ====
+\renewcommand{\familydefault}{\sfdefault}
+
+%% ==== ENCABEZADO Y PIE DE PÁGINA ====
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Universidad Nacional De Colombia}
+\rhead{Facultad De Ciencias}
+\cfoot{\thepage\ de \pageref{LastPage}}
+\lfoot{Departamento De Matemáticas}
+\rfoot{Modelos Lineales Generalizados para }
+\renewcommand{\headrulewidth}{0.08pt}
+\renewcommand{\footrulewidth}{0.08pt}
+
+%% ==== ESTILO DE PRIMERA PÁGINA ====
+\fancypagestyle{firstpage}{
+  \renewcommand{\headrulewidth}{0cm}
+  \cfoot{\thepage\ de \pageref{LastPage}}
+  \lfoot{Pricing de seguros con GLMs}
+  \rfoot{\today}
+  \lhead{}
+  \rhead{}
+  \chead{
+      \begin{tabular}{|ccc|r|}
+           \hline
+           \multirow{13}{*}{\includegraphics[scale=0.13]{../images/Escudo_de_la_Universidad_Nacional_de_Colombia_(2016).png}} &  &  &  \\
+           & {\LARGE Universidad Nacional de Colombia} &  & \textbf{Estudiantes:} \\
+           &  &  & Jose Miguel Acuña Hernandez \\
+           &  {\Large Facultad de ciencias} &  & jacunah@unal.edu.co \\
+           &  &  &  \\
+           &  {\Large Departamento de matemáticas} &  & Guillermo Murillo Tirado \\
+           &  &  & gmurillot@unal.edu.co \\
+           & {\Large Modelos lineales generalizados} &  &  \\
+           & {\Large para seguros} &  & \textbf{Docente:} \\
+           &  &  & Luz Mery Gonzalez G. \\
+           & {\Large Pricing de seguros utilizando}  &  & lgonzalezg@unal.edu.co \\
+           & {\Large modelos lineales generalizados} &  &  \\
+           &  &  &  \\
+           \hline
+      \end{tabular}\\
+  }
+}
+
+%% ==== ESTILO DE CONTENIDO ====
+\newenvironment{cuadrocontenido}{
+  \begin{center}
+  \begin{tabular}{|p{0.97\textwidth}|}
+    \hline
+    \multicolumn{1}{|c|}{
+        \rule{0pt}{2.5ex}
+        \textbf{\large Contenido}
+        \rule{0pt}{2.5ex}
+    } \\
+    \hline
+    \begin{minipage}{0.96\textwidth}
+        \centering
+        \vspace{0.5em}
+}{%
+        \vspace{0.5em}
+    \end{minipage} \\
+    \hline
+  \end{tabular}
+  \end{center}
+}
+
+%% ==== CONFIGURACIÓN DEL CUADRO DE CONTENIDO ====
+\renewcommand{\contentsname}{}
+
+%% ==== ESPACIADO Y FORMATO INICIAL ====
+% Espaciado inicial en el documento
+\newcommand{\espacioinicial}{\vspace*{10\baselineskip}}
