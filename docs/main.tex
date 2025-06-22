@@ -1,17 +1,16 @@
 \documentclass{article}
 
-% Importar configuración
-\input{config/preamble}
+% Importar configuración reorganizada
+\input{config/packages}
 \input{config/commands}
-\input{config/styles}
+\input{config/doc_style}
 
 \begin{document}
 
 \thispagestyle{firstpage}
-\vspace*{10\baselineskip}
+\espacioinicial
 
 % Tabla de contenidos
-\renewcommand{\contentsname}{}
 \begin{cuadrocontenido}
   \tableofcontents
 \end{cuadrocontenido}

@@ -55,56 +55,127 @@
 \def\Vscr{{\mathscr V}} \def\Wscr{{\mathscr W}} \def\Xscr{{\mathscr X}}
 \def\Yscr{{\mathscr Y}} \def\Zscr{{\mathscr Z}}
 
-%% ==== COMANDOS PERSONALIZADOS ====
+%% ==== COMANDOS PERSONALIZADOS MATEMÁTICOS ====
 \newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+\providecommand{\norm}[1]{\lVert#1\rVert}
 
-%% ==== ESTILO DE CONTENIDO ====
-\newenvironment{cuadrocontenido}{
-  \begin{center}
-  \begin{tabular}{|p{0.97\textwidth}|}
-    \hline
-    \multicolumn{1}{|c|}{
-        \rule{0pt}{2.5ex}
-        \textbf{\large Contenido}
-        \rule{0pt}{2.5ex}
-    } \\
-    \hline
-    \begin{minipage}{0.96\textwidth}
-        \centering
-        \vspace{0.5em}
-}{%
-        \vspace{0.5em}
-    \end{minipage} \\
-    \hline
-  \end{tabular}
-  \end{center}
+%% ==== DEFINICIÓN DE ENTORNOS MATEMÁTICOS ====
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{corollary}[theorem]{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[section]
+\newtheorem{remark}[definition]{Observación}
+
+\theoremstyle{remark}
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{exercise}{Ejercicio}
+\newtheorem{question}{Pregunta}
+\newtheorem{answer}[question]{Respuesta}
+\newtheorem{solution}[exercise]{Solución}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+%% ==== CONFIGURACIÓN DE BLOQUES DE CÓDIGO ====
+
+% Configuración de código ASCII
+\lstdefinestyle{directorytree}{
+  columns=fullflexible,
+  frame=single,
+  backgroundcolor=\color{white},
+  breaklines=false,
+  captionpos=b,
+  keepspaces=true,
+  showstringspaces=false,
+  tabsize=1,
+  lineskip=1pt,
+  basewidth=0.5em
 }
 
-%% ==== ESTILO DE PRIMERA PÁGINA ====
-\fancypagestyle{firstpage}{
-  \renewcommand{\headrulewidth}{0cm}
-  \cfoot{\thepage\ de \pageref{LastPage}}
-  \lfoot{Pricing de seguros con GLMs}
-  \rfoot{\today}
-  \lhead{}
-  \rhead{}
-  \chead{
-      \begin{tabular}{|ccc|r|}
-           \hline
-           \multirow{13}{*}{\includegraphics[scale=0.13]{../images/Escudo_de_la_Universidad_Nacional_de_Colombia_(2016).png}} &  &  &  \\
-           & {\LARGE Universidad Nacional de Colombia} &  & \textbf{Estudiantes:} \\
-           &  &  & Jose Miguel Acuña Hernandez \\
-           &  {\Large Facultad de ciencias} &  & jacunah@unal.edu.co \\
-           &  &  &  \\
-           &  {\Large Departamento de matemáticas} &  & Guillermo Murillo Tirado \\
-           &  &  & gmurillot@unal.edu.co \\
-           & {\Large Modelos lineales generalizados} &  &  \\
-           & {\Large para seguros} &  & \textbf{Docente:} \\
-           &  &  & Luz Mery Gonzalez G. \\
-           & {\Large Pricing de seguros utilizando}  &  & lgonzalezg@unal.edu.co \\
-           & {\Large modelos lineales generalizados} &  &  \\
-           &  &  &  \\
-           \hline
-      \end{tabular}\\
-  }
+% Configuración de código Python
+\lstdefinelanguage{Python}{
+    morekeywords={def, return, if, elif, else, for, while, break, continue, pass, import, from, as, class, try, except, finally, with, lambda, yield, True, False, None, in, is, not, and, or, global, nonlocal, assert, del, raise, print},
+    otherkeywords={self},
+    keywordstyle=\color{blue!70!black}\bfseries,
+    comment=[l]{\#},
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!60!black},
+    morestring=[b]',
+    morestring=[b]",
+    showstringspaces=false,
+    sensitive=true
+}
+
+\lstdefinestyle{PyOutput}{
+    backgroundcolor=\color{black!3},
+    breaklines=true,
+    frame=leftline,
+    framerule=3pt,
+    rulecolor=\color{green!60!black},
+    framesep=3pt,
+    numberstyle=\tiny\color{gray},
+    numbers=none,
+    commentstyle={},
+    keywordstyle={},
+    stringstyle={},
+    moredelim=**[is][\color{darkgreen!90!black}\bfseries]{@@}{@@},
+    captionpos=f,
+    aboveskip=1.2em,
+    belowskip=1.2em,
+    boxpos=t
+}
+
+% Configuración de código R
+\lstdefinelanguage{R} {
+    morekeywords={if, else, repeat, while, function, for, in, next, break, return, library, require, data.frame},
+    otherkeywords={TRUE, FALSE, NULL, NA, NaN, Inf},
+    keywordstyle=\color{blue!70!black}\bfseries,
+    comment=[l]{\#},
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red!60!black},
+    morestring=[b]',
+    morestring=[b]",
+    showstringspaces=false,
+    sensitive=true,
+    alsoletter={.}
+}
+
+\lstdefinestyle{Routput}{
+    backgroundcolor=\color{black!3},
+    breaklines=true,
+    frame=leftline,
+    framerule=3pt,
+    rulecolor=\color{green!60!black},
+    framesep=3pt,
+    numberstyle=\tiny\color{gray},
+    numbers=none,
+    commentstyle={},
+    keywordstyle={},
+    stringstyle={},
+    moredelim=**[is][\color{darkgreen!90!black}\bfseries]{@@}{@@},
+    captionpos=f,
+    aboveskip=1.2em,
+    belowskip=1.2em,
+    boxpos=t
+}
+
+% Configuración por defecto para listados
+\lstset{
+    language=R,    
+    basicstyle=\small\ttfamily\linespread{1.1}\selectfont,
+    backgroundcolor=\color{black!3},
+    frame=leftline,
+    framerule=3pt,
+    rulecolor=\color{teal!60!blue},
+    breaklines=true,
+    captionpos=f,
+    numberstyle=\tiny\color{gray!80!black},
+    numbers=none,
+    aboveskip=1.2em,
+    belowskip=1.2em,
+    xleftmargin=5pt,
+    xrightmargin=5pt,
+    framesep=3pt
 }
