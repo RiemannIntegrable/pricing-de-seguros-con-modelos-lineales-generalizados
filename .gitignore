@@ -1,7 +1,12 @@
 # VSCode
 .vscode/
+
 # Cursor
 .cursor
+
+# Claude
+.claude
+Claude.md
 
 # Jupyter Notebooks
 .ipynb_checkpoints
@@ -66,7 +71,7 @@ renv/staging/
 *.aux
 *.auxlock
 *.bbl
-*.bbl-SAVE-ERROR\href{https://github.com/RiemannIntegrable/pricing-de-seguros-con-modelos-lineales-generalizados}{Repositorio de GitHub}
+*.bbl-SAVE-ERROR
 *.bcf
 *.blg
 *.fdb_latexmk
