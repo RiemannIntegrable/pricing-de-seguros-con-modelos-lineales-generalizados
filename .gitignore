@@ -80,6 +80,7 @@ renv/staging/
 *.nav
 *.snm
 *.vrb
+*.bbl-SAVE-ERROR
 
 # IDEs y editores
 .idea/

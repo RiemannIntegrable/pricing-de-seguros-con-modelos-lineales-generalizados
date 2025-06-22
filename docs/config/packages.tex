@@ -1,0 +1,66 @@
+%% ==== CONFIGURACIÓN DE IDIOMA Y CODIFICACIÓN ====
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\spanishdecimal{.}
+
+%% ==== PAQUETES MATEMÁTICOS ====
+\usepackage{
+  amsmath, 
+  amssymb, 
+  amsfonts, 
+  yhmath, 
+  amsthm, 
+  mathtools, 
+  mathrsfs, 
+  cancel, 
+  bigints, 
+  fixmath,
+  actuarialsymbol
+}
+\usepackage{makecell}
+
+%% ==== PAQUETES PARA BIBLIOGRAFÍA ====
+\usepackage[style=ieee]{biblatex}
+\addbibresource{referencias.bib}
+
+%% ==== PAQUETES PARA GRÁFICOS Y DIAGRAMAS ====
+\usepackage{
+  graphicx,
+  tikz,
+  tikz-cd,
+  pgfplots,
+  venndiagram,
+  xcolor
+}
+\usepackage[all]{xy}
+
+%% ==== PAQUETES PARA FORMATO Y ESTRUCTURA ====
+\usepackage{
+  lipsum, 
+  multicol, 
+  float, 
+  multirow, 
+  array, 
+  tcolorbox, 
+  anyfontsize, 
+  xltxtra
+}
+
+%% ==== PAQUETES PARA CÓDIGO Y BIBLIOGRAFÍA ====
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{dirtree}
+
+%% ==== PAQUETES PARA FUENTES ====
+\usepackage{fontspec}
+\usepackage{lmodern}
+\usepackage{inconsolata}
+\usepackage{FiraMono}
+
+%% ==== PAQUETES PARA ENCABEZADO Y PIE DE PÁGINA ====
+\usepackage{fancyhdr, lastpage}
+
+%% ==== CONFIGURACIONES BÁSICAS DE PAQUETES ====
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{external}
+\tikzexternalize
