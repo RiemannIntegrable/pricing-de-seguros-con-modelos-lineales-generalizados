@@ -31,9 +31,6 @@ conda-bld/
 *.Rproj
 *.Rproj.user
 .Rproj.user/
-*.Rda
-*.rds
-*.RDS
 
 # Archivos temporales de R
 *-Ex.R
@@ -52,40 +49,36 @@ renv/python/
 renv/sandbox/
 renv/staging/
 
-# Dentro de data
+# ===== CONFIGURACIÓN DE DATA =====
+# Ignorar todo en data/ por defecto
 /data/*
-# Pero NO ignorar los .gitkeep
-!/data/.gitkeep
-!/data/*/.gitkeep
-!/data/**/.gitkeep
-# Permitir archivos de input
+
+# Pero permitir la estructura de directorios
+!/data/
 !/data/input/
-!/data/input/*.csv
+!/data/processed/
+!/data/output/
 
-# Modelos guardados (opcional - descomenta si no quieres versionarlos)
-/models/*.rds
-/models/*.RData
-/models/*.pkl
+# En data/input/ solo trackear Muestra_Siniestros_4.csv
+/data/input/*
+!/data/input/Muestra_Siniestros_4.csv
 
-# Generados por tex
-*.aux
-*.auxlock
-*.bbl
-*.bbl-SAVE-ERROR
-*.bcf
-*.blg
-*.fdb_latexmk
-*.fls
-*.log
-*.out
-*.run.xml
-*.synctex.gz
-*.toc
-*.xdv
-*.nav
-*.snm
-*.vrb
-*.bbl-SAVE-ERROR
+# En data/processed/ y data/output/ solo trackear .gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+/data/output/*
+!/data/output/.gitkeep
+
+# ===== CONFIGURACIÓN DE DOCS =====
+# Ignorar TODO en docs/ excepto .tex
+/docs/*
+!/docs/
+!/docs/*.tex
+!/docs/*.bib
+!/docs/content/
+!/docs/content/*.tex
+!/docs/config/
+!/docs/config/*.tex
 
 # IDEs y editores
 .idea/
@@ -126,6 +119,13 @@ tasks.txt
 *.nb.html
 *_files/
 
+# ===== CONFIGURACIÓN DE IMAGES =====
+# Ignorar todas las imágenes pero mantener estructura
+/images/*
+!/images/.gitkeep
+# Excepción: trackear solo el escudo de la universidad
+!/images/Escudo_de_la_Universidad_Nacional_de_Colombia_*
+
 # Archivos grandes de datos comunes
 *.xlsx
 *.xls
@@ -138,4 +138,13 @@ tasks.txt
 *.hdf5
 *.sqlite
 *.db
-#*.csv
+
+# Tipos de imagen comunes
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.svg
+*.webp
