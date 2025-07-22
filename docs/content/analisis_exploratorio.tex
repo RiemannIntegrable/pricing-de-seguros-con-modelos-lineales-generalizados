@@ -47,12 +47,19 @@ Los valores faltantes en variables de severidad (Amparo, SumaDePagos) correspond
 
 \subsubsection{Problemas Críticos Identificados}
 
+\textbf{1. Edades Irreales o Inconsistentes:}
+
 Se identificaron 795 registros (15.9\% del dataset) con valores de edad igual a 0, lo cual constituye un problema crítico que compromete la modelación.
 Adicionalmente, se observaron 522 registros (10.44\% del dataset) con edades superiores a 80 años, incluyendo valores extremos hasta 999 años.
-\newline
 
-Por otro lado, se identificaron 308 registros (6.16\% del dataset) con valor comercial igual a 0, lo cual es actuarialmente inconsistente.
-\newline
+\textbf{2. Valores Comerciales Inconsistentes:}
+
+Se identificaron 308 registros (6.16\% del dataset) con valor comercial igual a 0, lo cual es actuarialmente inconsistente ya que:
+\begin{itemize}
+\item Todo vehículo asegurado debe tener un valor comercial positivo para establecer la suma asegurada
+\item Los valores cero pueden indicar errores en la tasación o problemas de captura de información
+\item Estos registros comprometen el cálculo de primas basadas en valor del vehículo
+\end{itemize}
 
 \textbf{3. Inconsistencias en Variables Categóricas:}
 
