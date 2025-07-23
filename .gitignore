@@ -80,6 +80,9 @@ renv/staging/
 !/docs/config/
 !/docs/config/*.tex
 
+# Ignorar PDFs explícitamente
+*.pdf
+
 # IDEs y editores
 .idea/
 *.swp
