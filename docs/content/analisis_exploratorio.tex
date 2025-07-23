@@ -16,11 +16,12 @@ Categóricas & 11 & SERVICIO, Sexo\_Aseg, TIPO\_VEHICULO, MARCA \\
 Fechas & 2 & Desde, Hasta (período de vigencia) \\
 Variable Objetivo & 1 & Pago (Si/No - ocurrencia de siniestro) \\
 \hline
-\textbf{Total} & \textbf{17} & \textbf{Registros: 5,000} \\
+\textbf{Total} & \textbf{18} & \textbf{Registros: 5,000} \\
 \hline
 \end{tabular}
 \end{table}
 
+Dado que no tenemos un columna que indique el tipo de poliza que se tiene para cada registro se asumirá que todas las polizas en la base de datos son contra todo riezgo. Por otro lado, para facilidad y viabilidad del modelo las varaibles númericas como Modelo y Edad se van a agrupar. Las varaibles como Modelo y Edad serán agrupadas, la única variable que será siguiendo continua es la Variable de Vr\_Comercial. Las variable de tipo fecha serán usadas para calcular una variable que calcule la exposición en días. 
 \subsection{Análisis de Calidad de Datos}
 
 La evaluación de la calidad de los datos constituye un paso fundamental antes de la modelación actuarial, ya que permite identificar problemas que pueden comprometer la validez del modelo GLM. El análisis revela diversos aspectos críticos que requieren tratamiento previo a la construcción del modelo.
@@ -47,68 +48,17 @@ Los valores faltantes en variables de severidad (Amparo, SumaDePagos) correspond
 
 \subsubsection{Problemas Críticos Identificados}
 
-\textbf{1. Edades Irreales o Inconsistentes:}
-
 Se identificaron 795 registros (15.9\% del dataset) con valores de edad igual a 0, lo cual constituye un problema crítico que compromete la modelación.
-Adicionalmente, se observaron 522 registros (10.44\% del dataset) con edades superiores a 80 años, incluyendo valores extremos hasta 999 años.
+Adicionalmente, se observaron 522 registros (10.44\% del dataset) con edades superiores a 80 años, incluyendo valores extremos hasta 999 años. Al hacer la agrupación de esta categoría estos datos serán tratado como una categoría aparte.
+\newline
 
-\textbf{2. Valores Comerciales Inconsistentes:}
 
-Se identificaron 308 registros (6.16\% del dataset) con valor comercial igual a 0, lo cual es actuarialmente inconsistente ya que:
-\begin{itemize}
-\item Todo vehículo asegurado debe tener un valor comercial positivo para establecer la suma asegurada
-\item Los valores cero pueden indicar errores en la tasación o problemas de captura de información
-\item Estos registros comprometen el cálculo de primas basadas en valor del vehículo
-\end{itemize}
+Similarmente, se identificaron 308 registros (6.16\% del dataset) con valor comercial igual a 0. Estos registros comprometen el cálculo de primas basadas en valor del vehículo
+\newline
 
-\textbf{3. Inconsistencias en Variables Categóricas:}
+EN cuanto a las variable categóricas, hay en la mayoria de ellas un exeso de grupos. Por consiguiente, el tratatamiento de los datos que resultaron relevantes como el Color será reagrupar los datos según su frecuencia; se establecío el número máximo de grupos como 4, esto con el objetico de faciliar el calculo de las tarifas. 
 
-\begin{table}[H]
-\centering
-\caption{Problemas en Variables Categóricas}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Variable} & \textbf{Problema Identificado} & \textbf{Impacto} \\
-\hline
-Color & 47 categorías diferentes & Excesiva granularidad \\
-MARCA & 31 marcas, algunas con <10 registros & Problemas de estimación \\
-Referencia1 & 286 referencias únicas & Imposible para modelación \\
-Referencia2 & 134 sub-referencias & Alta dispersión \\
-\hline
-\end{tabular}
-\end{table}
-
-\textbf{4. Problemas de Codificación de Caracteres:}
-
-Se observaron problemas de codificación en la variable objetivo "Pago", donde aparece "S?" en lugar de "Sí", lo que indica:
-\begin{itemize}
-\item Problemas de encoding de caracteres especiales (tildes, eñes)
-\item Potenciales inconsistencias en la migración de datos
-\item Necesidad de estandarización de codificación de texto
-\end{itemize}
-
-\subsubsection{Recomendaciones de Limpieza}
-
-\textbf{Tratamiento Prioritario:}
-\begin{enumerate}
-\item \textbf{Edades cero:} Eliminar registros o imputar usando información demográfica complementaria
-\item \textbf{Edades extremas:} Investigar y corregir valores superiores a 100 años
-\item \textbf{Valores comerciales cero:} Imputar usando modelos de tasación por marca/modelo/año
-\item \textbf{Sexo faltante:} Implementar imputación basada en nombres o patrones demográficos
-\item \textbf{Agrupación categórica:} Consolidar categorías de baja frecuencia
-\end{enumerate}
-
-\textbf{Impacto en Modelación GLM:}
-\begin{itemize}
-\item Los problemas identificados pueden introducir sesgos en la estimación de parámetros
-\item La alta granularidad en variables categóricas puede causar problemas de convergencia
-\item Los valores extremos pueden generar outliers que afecten la bondad de ajuste
-\item Es fundamental completar la limpieza antes del entrenamiento del modelo
-\end{itemize}
-
-La calidad general del dataset es aceptable para modelación actuarial, pero requiere un proceso de limpieza estructurado que garantice la robustez del modelo GLM resultante.
-
-\subsection{Variable Objetivo: Frecuencia de Siniestros}
+\subsection{Variables Objetivo: Frecuencia de Siniestros y Suma de Pagos}
 
 La distribución de la variable objetivo presenta características fundamentales para el diseño del modelo GLM:
 
@@ -239,7 +189,7 @@ Masculino & 2,127 & 236 & 11.10 \\
 \end{tabular}
 \end{table}
 
-Aunque las diferencias son marginales (0.87 puntos porcentuales), la variable sexo debe evaluarse en el contexto del modelo multivariado para determinar su significancia estadística.
+Aunque las diferencias son marginales (0.87 puntos porcentuales), la variables las categorías deben de verse por separado. A su vez, el 17\% de los datos no tienen sexo, por consiguiente serán tratados como otra categoría. 
 
 \subsection{Análisis de Interacciones}
 
@@ -252,28 +202,13 @@ El análisis de interacciones entre edad y servicio del vehículo revela patrone
 \end{figure}
 
 La interacción muestra que el efecto de la edad varía según el tipo de servicio, siendo particularmente pronunciado en vehículos oficiales para asegurados mayores de 51 años (12.95\% de siniestralidad).
-
-\subsection{Análisis de Variables Vehiculares}
-
-\subsubsection{Concentración por Marca}
-
-El análisis de las principales marcas vehiculares evidencia concentración significativa y diferencias en siniestralidad:
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{../images/analisis_marcas_principales.png}
-\caption{Análisis de Siniestralidad por Marca Principal}
-\end{figure}
-
-La concentración en pocas marcas (Hyundai domina con más del 40\% de la cartera) sugiere la necesidad de agrupar marcas de baja frecuencia en categorías como "Otras" para evitar problemas de estimación en el modelo GLM.
-
 \subsection{Análisis de Correlaciones}
 
 El análisis de correlaciones entre variables numéricas no revela multicolinealidad severa que comprometa la modelación GLM:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{../images/matriz_correlaciones.png}
+\includegraphics[width=0.5\textwidth]{../images/output.png}
 \caption{Matriz de Correlaciones entre Variables Numéricas}
 \end{figure}
 
@@ -290,67 +225,3 @@ Para pólizas con siniestros efectivos, el análisis de severidad por tipo de am
 \end{figure}
 
 Aunque el modelo GLM de frecuencia no utiliza directamente esta información, es relevante para el diseño integral del sistema de pricing y para validar la consistencia de los datos.
-
-\subsection{Recomendaciones para el Modelo GLM}
-
-Con base en el análisis exploratorio realizado, se establecen las siguientes recomendaciones técnicas para la construcción del modelo GLM de frecuencia:
-
-\subsubsection{Selección de Variables}
-
-\textbf{Variables Obligatorias:}
-\begin{itemize}
-\item SERVICIO: Factor de diferenciación más significativo
-\item Edad del asegurado: Variable demográfica fundamental (posterior a limpieza)
-\item Vr\_Comercial: Proxy de exposición económica
-\end{itemize}
-
-\textbf{Variables Complementarias:}
-\begin{itemize}
-\item TIPO\_VEHICULO: Diferenciación técnica relevante
-\item Sexo\_Aseg: Variable demográfica tradicional (evaluar significancia)
-\item MARCA: Posterior a agrupación por frecuencia
-\end{itemize}
-
-\subsubsection{Tratamiento de Datos}
-
-\begin{enumerate}
-\item \textbf{Limpieza crítica:} Tratar 795 registros con edad = 0
-\item \textbf{Imputación:} Evaluar tratamiento de 625 valores faltantes en sexo
-\item \textbf{Agrupación:} Consolidar marcas con frecuencia $<$ 1\% en categoría "Otras"
-\item \textbf{Transformaciones:} Considerar log(Vr\_Comercial) por alta variabilidad
-\item \textbf{Variables derivadas:} Crear antigüedad del vehículo (2023 - Modelo)
-\end{enumerate}
-
-\subsubsection{Estructura del Modelo}
-
-\begin{itemize}
-\item \textbf{Distribución:} Binomial (apropiada para frecuencia de siniestros)
-\item \textbf{Función de enlace:} Logit (estándar para probabilidades)
-\item \textbf{Términos de interacción:} Evaluar Edad $\times$ SERVICIO
-\item \textbf{Validación:} División estratificada 70/30 por SERVICIO
-\end{itemize}
-
-\subsubsection{Criterios de Validación}
-
-El modelo debe ser evaluado mediante:
-\begin{itemize}
-\item Análisis de residuos de Pearson y deviance
-\item Pruebas de bondad de ajuste (Chi-cuadrado, Hosmer-Lemeshow)
-\item Capacidad predictiva (AUC, curvas de lift)
-\item Significancia estadística de coeficientes ($p < 0.05$)
-\item Interpretabilidad actuarial de factores relatividad
-\end{itemize}
-
-\subsection{Conclusiones}
-
-El análisis exploratorio revela un dataset de alta calidad para la construcción de un modelo GLM de frecuencia de siniestros. Los principales hallazgos incluyen:
-
-\begin{enumerate}
-\item Identificación del tipo de servicio como variable de segmentación crítica
-\item Confirmación de patrones típicos de riesgo por edad en seguros de automóviles
-\item Concentración de la cartera en vehículos de gama media-baja
-\item Ausencia de multicolinealidad severa entre variables explicativas
-\item Necesidad de tratamiento previo de datos (edad = 0, agrupación de marcas)
-\end{enumerate}
-
-El dataset proporciona una base sólida para desarrollar un modelo GLM técnicamente robusto que permita establecer una tarificación diferenciada y competitiva, cumpliendo con los objetivos actuariales de solvencia y rentabilidad de la compañía aseguradora.
