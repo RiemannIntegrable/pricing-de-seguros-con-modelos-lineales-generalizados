@@ -80,9 +80,12 @@ renv/staging/
 !/docs/config/
 !/docs/config/*.tex
 
+<<<<<<< HEAD
 # Archivos PDF (nunca trackear)
 *.pdf
 
+=======
+>>>>>>> 4669d88f9706549ed2d2df0aade81afc6c41f85d
 # IDEs y editores
 .idea/
 *.swp
