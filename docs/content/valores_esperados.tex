@@ -1,0 +1,50 @@
+\section{Valores Esperados}
+
+Los modelos GLM ajustados permiten calcular valores esperados de frecuencia y severidad para todas las combinaciones posibles de sus respectivas variables explicativas. Este análisis exhaustivo facilita la evaluación del comportamiento predictivo de cada modelo por separado.
+
+\subsection{Predicciones de Frecuencia}
+
+El modelo de frecuencia (quasi-Poisson) genera predicciones para las 12 combinaciones posibles de **Modelo × Edad**, considerando una exposición estándar de 1 año.
+
+\begin{table}[H]
+\centering
+\caption{Frecuencias Esperadas por Modelo y Edad del Asegurado}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Modelo} & \textbf{41\_63} & \textbf{19\_41} & \textbf{63\_85} & \textbf{Otros} \\
+\hline
+2007\_2013 & 0.208 & 0.242 & 0.237 & 0.247 \\
+1993\_1999 & 0.224 & 0.261 & 0.256 & 0.267 \\
+2000\_2006 & 0.269 & 0.314 & 0.308 & 0.320 \\
+\hline
+\end{tabular}
+\end{table}
+
+Los vehículos modelo 2000-2006 presentan las mayores frecuencias esperadas (0.269-0.320 siniestros/año), mientras que los conductores jóvenes (19-41 años) y el grupo ``Otros'' muestran tasas incrementales consistentes. El rango de variación es de **1.54 veces** entre el mínimo (0.208) y máximo (0.320).
+
+\subsection{Predicciones de Severidad}
+
+El modelo de severidad (log-normal) genera 768 predicciones para todas las combinaciones posibles de sus 5 variables explicativas: **Modelo × Color × Carrocería × Servicio × Edad**. Aqui hay alguna de las severidades esperadas.
+
+\begin{table}[H]
+\centering
+\caption{Top 15 Combinaciones de Mayor Severidad Esperada}
+\begin{tabular}{|c|l|l|l|l|l|r|}
+\hline
+\textbf{Rank} & \textbf{Modelo} & \textbf{Color} & \textbf{Carrocería} & \textbf{Servicio} & \textbf{Edad} & \textbf{Severidad (COP)} \\
+\hline
+1 & 2007\_2013 & Otros & Hatchback & Público & 19\_41 & \$168,558,185 \\
+2 & 2007\_2013 & Otros & Hatchback & Público & 41\_63 & \$161,588,960 \\
+3 & 2007\_2013 & Otros & Sedán & Público & 19\_41 & \$142,153,897 \\
+4 & 2007\_2013 & Otros & Sedán & Público & 41\_63 & \$136,276,387 \\
+5 & 2007\_2013 & Otros & Hatchback & Público & 63\_85 & \$96,173,907 \\
+6 & 2007\_2013 & Otros & Hatchback & Público & Otros & \$95,376,310 \\
+7 & 2007\_2013 & Plata & Hatchback & Público & 19\_41 & \$94,092,616 \\
+8 & 2007\_2013 & Plata & Hatchback & Público & 41\_63 & \$90,202,253 \\
+9 & 2000\_2006 & Otros & Hatchback & Público & 19\_41 & \$85,615,135 \\
+10 & 2007\_2013 & Blanco & Hatchback & Público & 19\_41 & \$82,913,885 \\
+11 & 2000\_2006 & Otros & Hatchback & Público & 41\_63 & \$82,075,282 \\
+12 & 2007\_2013 & Otros & Sedán & Público & 63\_85 & \$81,108,465 \\
+\hline
+\end{tabular}
+\end{table}

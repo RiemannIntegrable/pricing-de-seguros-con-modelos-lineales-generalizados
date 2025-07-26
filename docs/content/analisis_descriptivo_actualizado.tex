@@ -1,0 +1,70 @@
+\section{Análisis Exploratorio Actuarial}
+
+\subsection{Estructura del Portafolio}
+
+La base de datos contiene 5,000 pólizas de seguros de automóviles con tasa de siniestralidad del 10.3\% (515 siniestros), ubicándose en el rango esperado para el mercado vehicular colombiano. El análisis se enfoca en identificar factores de riesgo significativos para la construcción de modelos GLM bajo metodología frecuencia-severidad.
+
+Los problemas de calidad identificados incluyen 795 registros con edad cero y 625 valores faltantes en sexo del asegurado, tratados mediante imputación categórica. La variable MARCA presenta concentración total en Hyundai, limitando su capacidad diferenciadora para pricing.
+
+\subsection{Factores Principales de Riesgo}
+
+El análisis confirma que SERVICIO constituye el factor de riesgo más significativo. Los vehículos de Transporte Personal exhiben la mayor siniestralidad (14.286\%), seguidos por Oficial (12.121\%), mientras que Público presenta el menor riesgo (9.177\%), contrario a la intuición actuarial tradicional. Esta inversión sugiere diferencias en patrones de uso, mantenimiento o calidad de conductores entre segmentos.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../images/analisis_servicio_vehiculo.png}
+\caption{Distribución y Siniestralidad por Servicio}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../images/analisis_edad_siniestralidad.png}
+\caption{Perfil de Riesgo por Edad}
+\end{minipage}
+\end{figure}
+
+La variable EDAD presenta la curva característica en U de seguros vehiculares, con máximos en conductores jóvenes (18-25: 11.842\%) y mayores (66+: 12.153\%), y mínimo en el rango 46-55 años (9.56\%). La distribución etaria muestra concentración en conductores activos (36-45: 27.97\%), proporcionando credibilidad estadística adecuada para diferenciación tarifaria.
+
+\subsection{Valor Comercial y Concentración de Cartera}
+
+El análisis del valor comercial revela concentración significativa en segmentos económicos: 80.64\% de la cartera está valorizada hasta 40M COP. Las tasas de siniestralidad por rango de valor muestran estabilidad alrededor del 10\%, sugiriendo que el valor del vehículo no es discriminante efectivo para frecuencia de siniestros, aunque sí determina la exposición económica en severidad.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../images/analisis_valor_comercial.png}
+\caption{Distribución de Valor Comercial}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../images/interaccion_edad_servicio.png}
+\caption{Interacción Edad-Servicio}
+\end{minipage}
+\end{figure}
+
+La interacción edad-servicio muestra patrones diferenciados actuarialmente relevantes. Los conductores jóvenes en servicio particular presentan siniestralidad elevada (12.977\%), mientras que en servicio público la edad avanzada incrementa el riesgo significativamente. Estas interacciones justifican términos cruzados en la especificación GLM.
+
+\subsection{Severidad y Exposición Económica}
+
+El análisis de severidad por tipo de amparo confirma variabilidad significativa en costos promedio según cobertura. PPD (Pérdida Parcial por Daños) representa el mayor volumen de siniestros, mientras que RC (Responsabilidad Civil) presenta severidades superiores, consistente con la naturaleza de los riesgos cubiertos.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../images/analisis_severidad_amparos.png}
+\caption{Severidad por Tipo de Amparo}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../images/pairplot_valor_pagos.png}
+\caption{Relación Valor-Suma de Pagos}
+\end{minipage}
+\end{figure}
+
+La relación entre valor comercial y suma de pagos presenta una correlación negativa (-0.095), resultado actuarialmente ilógico que sugiere problemas en la calidad del dato o sesgos de selección. En condiciones normales, vehículos de mayor valor deberían presentar severidades superiores debido a costos de repuestos y reparación. Esta anomalía estadística justifica la exclusión de Valor Comercial como variable explicativa en los modelos GLM de severidad.

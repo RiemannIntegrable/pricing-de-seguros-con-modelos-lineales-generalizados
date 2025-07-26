@@ -1,0 +1,42 @@
+\section{Preparación y Categorización de Datos}
+
+La preparación de datos para modelos GLM de frecuencia-severidad requiere un proceso sistemático de limpieza, filtrado y categorización que preserve la información actuarial relevante mientras garantice la estabilidad estadística de los modelos. El presente trabajo implementa una metodología rigurosa basada en principios actuariales y estadísticos para la transformación del conjunto de datos de siniestros de automóviles.
+
+\subsection{Filtrado y Homogeneización de la Cartera}
+
+El proceso inicia con la aplicación de un filtro fundamental: la exclusión de vehículos con valor comercial inferior a \$4,000,000 COP. Esta decisión, implementada en la función \texttt{agrupaciones()}, responde a la necesidad actuarial de homogeneizar la cartera, eliminando vehículos de gama muy baja cuyo comportamiento de riesgo puede ser atípico y generar ruido en la modelación. El filtro elimina aproximadamente 1,810 observaciones (36.2\% de la muestra original), concentrando el análisis en una cartera más homogénea y representativa del mercado objetivo.
+
+\subsection{Metodología de Categorización Óptima}
+
+Para variables numéricas críticas como edad del asegurado y año del modelo del vehículo, se implementa el algoritmo de Freedman-Diaconis, que determina el ancho óptimo de bins mediante la fórmula:
+
+$$\text{ancho\_bin} = \frac{2 \times \text{IQR}(X)}{n^{1/3}}$$
+
+Esta metodología balancea sesgo y varianza en la discretización, siendo robusta ante valores atípicos por su dependencia del rango intercuartílico. Para la variable edad, se establece un rango válido de 18-90 años, asignando valores extremos a la categoría ``Otros''. El resultado típico genera tres categorías equilibradas como ``19\_41'', ``41\_63'', ``63\_85''.
+
+\subsection{Tratamiento de Variables Categóricas}
+
+Para variables categóricas con más de cuatro niveles, se implementa una regla de concentración basada en exposición. Se conservan las tres categorías con mayor exposición total (medida en años-póliza) y se agrupan las restantes en ``Otros''. Este criterio asegura que las categorías retenidas tengan suficiente volumen de datos para estimaciones estadísticamente significativas.
+
+\subsection{Transformación del Valor Comercial}
+
+La variable de valor comercial se transforma en una variable ordinal denominada ``Gama'' mediante división por terciles, generando las categorías ``Baja'', ``Media'' y ``Media\_Alta''. Esta transformación facilita la interpretación actuarial de los multiplicadores tarifarios y reduce la complejidad del modelo, manteniendo la información esencial sobre el nivel de exposición económica del vehículo.
+
+\subsection{Preparación para Modelos de Frecuencia-Severidad}
+
+El proceso de agregación consolida las observaciones individuales por perfil de riesgo único (combinación de todas las variables categóricas), calculando métricas esenciales para la metodología frecuencia-severidad:
+
+\begin{itemize}
+\item \textbf{Exposición total}: Suma de años de vigencia por perfil
+\item \textbf{Número de siniestros}: Conteo de eventos con costo $\geq$ \$100,000
+\item \textbf{Suma de pagos}: Costo total de siniestros por perfil
+\item \textbf{Severidad media}: Costo promedio por siniestro (solo para perfiles con siniestros)
+\end{itemize}
+
+\subsection{Tratamiento de Datos Temporales y Monetarios}
+
+La metodología incluye ajuste por inflación utilizando tasas oficiales del Banco de la República (2011: 3.73\%, 2012: 2.44\%, 2013: 1.94\%, 2014: 3.66\%), homogeneizando todos los valores monetarios a pesos constantes de 2015. Adicionalmente, se implementa división proporcional de pólizas multi-anuales para cálculo preciso de exposición, expandiendo el conjunto de datos de 5,000 a 9,190 observaciones.
+
+\subsection{Resultado de la Categorización}
+
+El proceso de categorización produce un conjunto de datos agregados con 333 combinaciones únicas de perfil de riesgo, distribuidas entre 9 variables categóricas finales. La estructura resultante incluye: Modelo (3 categorías), Color (4 categorías), Carroceria (4 categorías), CLASE\_FASECOLDA (4 categorías), TIPO\_VEHICULO (2 categorías), SERVICIO (4 categorías), Sexo\_Aseg (3 categorías), Edad (4 categorías) y Gama (3 categorías).

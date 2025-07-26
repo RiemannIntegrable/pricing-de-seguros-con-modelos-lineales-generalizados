@@ -143,6 +143,23 @@ agrupaciones <- function(df) {
     stop("El input debe ser un data.frame")
   }
   
+  # Primero filtrar Vr_Comercial < 4 millones antes de hacer agrupaciones
+  if ("Vr_Comercial" %in% names(df)) {
+    filas_inicial <- nrow(df)
+    cat("Filas iniciales:", filas_inicial, "\n")
+    cat("Rango inicial Vr_Comercial: $", format(min(df$Vr_Comercial, na.rm=TRUE), big.mark=","), 
+        " - $", format(max(df$Vr_Comercial, na.rm=TRUE), big.mark=","), "\n")
+    
+    # Filtrar valores válidos y >= 4M
+    df <- df[!is.na(df$Vr_Comercial) & df$Vr_Comercial >= 4000000, ]
+    filas_final <- nrow(df)
+    
+    cat("Filas después del filtro >= 4M:", filas_final, "\n")
+    cat("Filas eliminadas:", filas_inicial - filas_final, "\n")
+    cat("Rango final Vr_Comercial: $", format(min(df$Vr_Comercial, na.rm=TRUE), big.mark=","), 
+        " - $", format(max(df$Vr_Comercial, na.rm=TRUE), big.mark=","), "\n")
+  }
+  
   df_result <- df
   
   for (col_name in names(df)) {
@@ -179,6 +196,38 @@ agrupaciones <- function(df) {
           modelo_categorizado <- Freedman_Diaconis_Modelo(col_numeric, n_categories = 3)$categories
           df_result[[col_name]] <- modelo_categorizado
         }
+      }
+    } else if (col_name == "Vr_Comercial") {
+      if (is.numeric(col_data)) {
+        cat("\n=== AGRUPACIÓN DE Vr_Comercial → Gama ===\n")
+        cat("Datos para agrupar - N:", length(col_data), "\n")
+        cat("Rango: $", format(min(col_data, na.rm=TRUE), big.mark=","), 
+            " - $", format(max(col_data, na.rm=TRUE), big.mark=","), "\n")
+        
+        # Crear categorías de valor comercial usando terciles
+        terciles <- quantile(col_data, probs = c(0, 1/3, 2/3, 1), na.rm = TRUE)
+        
+        # Verificar que los terciles son diferentes
+        if (length(unique(terciles)) < 4) {
+          warning("Los terciles no son únicos. Usando cuantiles alternativos.")
+          terciles <- quantile(col_data, probs = c(0, 0.33, 0.67, 1), na.rm = TRUE)
+        }
+        
+        gama_categorizada <- cut(col_data,
+                                breaks = terciles,
+                                labels = c("Baja", "Media", "Media_Alta"),
+                                include.lowest = TRUE)
+        
+        # Cambiar el nombre de la columna de Vr_Comercial a Gama
+        df_result[["Gama"]] <- gama_categorizada
+        df_result[[col_name]] <- NULL  # Eliminar la columna original
+        
+        cat("Puntos de corte (terciles):\n")
+        cat("Baja: $", format(terciles[1], big.mark=","), " - $", format(terciles[2], big.mark=","), "\n")
+        cat("Media: $", format(terciles[2], big.mark=","), " - $", format(terciles[3], big.mark=","), "\n") 
+        cat("Media_Alta: $", format(terciles[3], big.mark=","), " - $", format(terciles[4], big.mark=","), "\n")
+        cat("Distribución por categoría:\n")
+        print(table(gama_categorizada, useNA = "ifany"))
       }
     } else if (col_name == "Amparo") {
       # Ignorar la variable Amparo - no aplicar agrupaciones

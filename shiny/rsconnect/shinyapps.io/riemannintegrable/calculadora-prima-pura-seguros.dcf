@@ -1,0 +1,10 @@
+name: calculadora-prima-pura-seguros
+title:
+username: riemannintegrable
+account: riemannintegrable
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15116911
+bundleId: 10676142
+url: https://riemannintegrable.shinyapps.io/calculadora-prima-pura-seguros/
+version: 1

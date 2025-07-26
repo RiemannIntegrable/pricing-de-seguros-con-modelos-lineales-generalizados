@@ -1,0 +1,68 @@
+\section{Tablas de Relatividades}
+
+Los modelos GLM de frecuencia y severidad permiten calcular relatividades por factor de riesgo, facilitando la construcción de estructuras tarifarias actuarialmente sólidas. Las relatividades representan el factor multiplicativo respecto a la categoría de referencia para cada variable.
+
+\subsection{Relatividades de Frecuencia}
+
+\begin{table}[H]
+\centering
+\caption{Relatividades de Frecuencia por Factor de Riesgo}
+\begin{tabular}{|l|l|c|}
+\hline
+\textbf{Factor} & \textbf{Categoría} & \textbf{Relatividad} \\
+\hline
+\multirow{3}{*}{Modelo} & 2007\_2013 (Ref.) & 1.000 \\
+                        & 1993\_1999 & 1.080 \\
+                        & 2000\_2006 & 1.297 \\
+\hline
+\multirow{4}{*}{Edad} & 41\_63 (Ref.) & 1.000 \\
+                      & 19\_41 & 1.166 \\
+                      & 63\_85 & 1.142 \\
+                      & Otros & 1.190 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Relatividades de Severidad}
+
+\begin{table}[H]
+\centering
+\caption{Relatividades de Severidad por Factor de Riesgo}
+\begin{tabular}{|l|l|c|}
+\hline
+\textbf{Factor} & \textbf{Categoría} & \textbf{Relatividad} \\
+\hline
+\multirow{3}{*}{Modelo} & 2007\_2013 (Ref.) & 1.000 \\
+                        & 1993\_1999 & 0.428 \\
+                        & 2000\_2006 & 0.508 \\
+\hline
+\multirow{4}{*}{Edad} & 41\_63 (Ref.) & 1.000 \\
+                      & 19\_41 & 1.043 \\
+                      & 63\_85 & 0.595 \\
+                      & Otros & 0.590 \\
+\hline
+\multirow{4}{*}{Color} & Otros (Ref.) & 1.000 \\
+                       & Amarillo & 0.344 \\
+                       & Blanco & 1.446 \\
+                       & Plata & 0.914 \\
+\hline
+\multirow{4}{*}{Carrocería} & Sedán (Ref.) & 1.000 \\
+                            & Cabinado & 0.624 \\
+                            & Hatchback & 0.933 \\
+                            & Otros & 0.675 \\
+\hline
+\multirow{4}{*}{Servicio} & Particular (Ref.) & 1.000 \\
+                          & Oficial & 3.363 \\
+                          & Público & 16.086 \\
+                          & Transporte Personal & 0.904 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Interpretación de las Relatividades}
+
+\subsubsection{Factores de Frecuencia}
+Los vehículos modelo 2000-2006 presentan la mayor frecuencia de siniestros (+29.7\%), mientras que los conductores en el rango ``Otros'' muestran el mayor incremento (+19.0\%). Los conductores jóvenes (19-41 años) también presentan mayor frecuencia (+16.6\%).
+
+\subsubsection{Factores de Severidad}
+El **tipo de servicio** es el factor de mayor impacto, con el servicio público presentando una relatividad extrema de 16.086 (+1,508.6\%). El **color del vehículo** también muestra variabilidad significativa, con vehículos blancos incrementando la severidad (+44.6\%) y amarillos reduciéndola (-65.6\%).

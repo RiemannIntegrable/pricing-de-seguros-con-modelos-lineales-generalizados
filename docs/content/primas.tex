@@ -1,0 +1,53 @@
+\section{Primas Puras}
+
+La prima pura se calcula como el producto de la frecuencia esperada y la severidad esperada para cada combinación de variables explicativas. Utilizando los modelos GLM ajustados, se pueden estimar las primas para diferentes perfiles de riesgo.
+
+\subsection{Cálculo de Primas Puras}
+
+Para cada combinación, la prima pura se calcula como:
+\begin{equation}
+\text{Prima Pura} = E[\text{Frecuencia}] \times E[\text{Severidad}]
+\end{equation}
+
+donde $E[\text{Frecuencia}]$ proviene del modelo quasi-Poisson y $E[\text{Severidad}]$ del modelo log-normal.
+
+\begin{table}[H]
+\centering
+\caption{Top 15 Combinaciones de Mayor Prima Pura}
+\begin{tabular}{|c|l|l|l|l|l|r|}
+\hline
+\textbf{Rank} & \textbf{Modelo} & \textbf{Color} & \textbf{Carrocería} & \textbf{Servicio} & \textbf{Edad} & \textbf{Prima Pura (COP)} \\
+\hline
+1 & 2007\_2013 & Otros & Hatchback & Público & 19\_41 & \$40,809,622 \\
+2 & 2007\_2013 & Otros & Hatchback & Público & 41\_63 & \$33,550,231 \\
+3 & 2007\_2013 & Otros & Sedán & Público & 19\_41 & \$34,416,880 \\
+4 & 2007\_2013 & Otros & Sedán & Público & 41\_63 & \$28,294,657 \\
+5 & 2007\_2013 & Otros & Hatchback & Público & 63\_85 & \$22,798,794 \\
+6 & 2007\_2013 & Otros & Hatchback & Público & Otros & \$23,558,998 \\
+7 & 2007\_2013 & Plata & Hatchback & Público & 19\_41 & \$22,780,763 \\
+8 & 2007\_2013 & Plata & Hatchback & Público & 41\_63 & \$18,728,423 \\
+9 & 2000\_2006 & Otros & Hatchback & Público & 19\_41 & \$26,890,430 \\
+10 & 2007\_2013 & Blanco & Hatchback & Público & 19\_41 & \$20,074,281 \\
+11 & 2000\_2006 & Otros & Hatchback & Público & 41\_63 & \$22,107,059 \\
+12 & 2007\_2013 & Otros & Sedán & Público & 63\_85 & \$19,227,410 \\
+13 & 2007\_2013 & Otros & Sedán & Público & Otros & \$19,868,530 \\
+14 & 2007\_2013 & Blanco & Hatchback & Público & 41\_63 & \$16,503,381 \\
+15 & 2007\_2013 & Plata & Sedán & Público & 19\_41 & \$19,212,204 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Análisis de Primas}
+
+Los resultados muestran que:
+
+\begin{itemize}
+\item Las primas más altas corresponden a vehículos modelo 2007-2013 con color ``Otros'' y carrocería hatchback en servicio público
+\item Los conductores jóvenes (19-41 años) presentan las primas más elevadas, especialmente en combinación con vehículos de colores menos comunes
+\item El rango de variación en primas puras es significativo: desde \$16,503,381 hasta \$40,809,622 COP
+\item La prima máxima es **2.47 veces** mayor que la mínima dentro del top 15
+\item Los vehículos modelo 2000-2006 aparecen solo en 2 posiciones del top 15 (ranks 9 y 11), confirmando que los modelos más recientes (2007-2013) tienen mayor riesgo actuarial
+\item Interesantemente, la combinación con mayor prima pura (2007-2013, Otros, Hatchback, Público, 19-41) no es necesariamente la de mayor severidad, debido al efecto multiplicativo de la frecuencia
+\end{itemize}
+
+Estas primas reflejan la combinación del riesgo de frecuencia y severidad, proporcionando una base técnica sólida para la tarificación de seguros de automóviles.

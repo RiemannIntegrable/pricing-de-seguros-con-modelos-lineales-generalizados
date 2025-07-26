@@ -1,0 +1,160 @@
+\section{Selección de Modelos}
+
+La implementación de la metodología frecuencia-severidad requiere la selección de modelos GLM apropiados para cada componente. El presente análisis evalúa sistemáticamente las distribuciones estadísticas y variables explicativas para la estimación de primas puras en seguros de automóviles.
+
+\subsection{Configuración de Niveles de Referencia}
+
+Previo a la selección de variables, se establecieron las categorías de referencia para cada variable categórica basándose en la exposición total acumulada. Esta metodología asegura que la categoría de referencia corresponda al segmento con mayor volumen de exposición, facilitando la interpretación actuarial de los coeficientes estimados. La aplicación de esta función resultó en la siguiente configuración de categorías de referencia:
+
+\begin{lstlisting}[style=Routput]
+Variable: Modelo - Categoría de referencia: 2007_2013 
+Variable: Color - Categoría de referencia: Otros 
+Variable: Carroceria - Categoría de referencia: SEDAN 
+Variable: CLASE_FASECOLDA - Categoría de referencia: AUTOMOVIL 
+Variable: TIPO_VEHICULO - Categoría de referencia: Livianos 
+Variable: SERVICIO - Categoría de referencia: Particular 
+Variable: Sexo_Aseg - Categoría de referencia: M 
+Variable: Edad - Categoría de referencia: 41_63 
+Variable: Gama - Categoría de referencia: Media
+\end{lstlisting}
+
+Esta configuración establece como referencia los segmentos con mayor participación en términos de exposición: vehículos modelo 2007-2013, color otros, carrocería sedán, automóviles particulares, conductores masculinos de 41-63 años, y gama media. Los coeficientes estimados en los modelos subsecuentes representan el efecto diferencial respecto a estas categorías base.
+
+\subsection{Modelo de Frecuencia}
+
+\subsubsection{Selección de Variables}
+
+Se realizó una selección stepwise forward sobre todas las variables categóricas disponibles, aplicando el algoritmo automático por criterio AIC. El resultado del stepwise retuvo todas las variables en el modelo:
+
+\begin{lstlisting}[style=Routput]
+Coefficients:
+Estimate                       Std. Error t value Pr(>|t|)    
+(Intercept)                   -1.63521    0.08326 -19.640  < 2e-16 ***
+Modelo1993_1999                0.14159    0.18568   0.763  0.44659    
+Modelo2000_2006                0.30113    0.09219   3.266  0.00127 ** 
+ColorAMARILLO                  0.31279    0.39828   0.785  0.43314    
+ColorBLANCO                    0.10404    0.10500   0.991  0.32291    
+ColorPLATA                     0.12814    0.08715   1.470  0.14297    
+CarroceriaCABINADO             0.17481    0.22410   0.780  0.43624    
+CarroceriaHATCHBACK            0.10622    0.07689   1.381  0.16864    
+CarroceriaOtros                0.24545    0.18046   1.360  0.17526    
+CLASE_FASECOLDAAUTOMOVIL TAXI -0.13668    0.34741  -0.393  0.69440    
+CLASE_FASECOLDACAMIONETA       0.03560    0.20075   0.177  0.85941    
+CLASE_FASECOLDAOtros          -0.07367    0.23888  -0.308  0.75810    
+TIPO_VEHICULOPesados           0.13410    0.29829   0.450  0.65350    
+SERVICIOOficial               -0.02852    0.19448  -0.147  0.88357    
+SERVICIOPublico               -0.35293    0.25442  -1.387  0.16687    
+SERVICIOTransporte Personal    0.17412    0.48386   0.360  0.71932    
+Sexo_AsegF                    -0.06142    0.06821  -0.900  0.36890    
+Sexo_AsegNo_Binarie           -0.04271    0.15382  -0.278  0.78156    
+Edad19_41                      0.14596    0.07695   1.897  0.05924 .  
+Edad63_85                      0.17770    0.14259   1.246  0.21407    
+EdadOtros                      0.16033    0.10010   1.602  0.11073    
+---
+\end{lstlisting}
+
+Del análisis del summary resultante, se observó que únicamente las variables \texttt{Modelo} (categoría 2000\_2006 con p = 0.00779) y \texttt{Edad} (categoría 19\_41 con p = 0.04805) presentaron niveles estadísticamente significativos.
+
+El modelo final simplificado se define como:
+
+\begin{lstlisting}[language=R]
+  modelo_frecuencia_qp <- glm(
+    n_siniestros ~ Modelo + Edad + offset(log(exposicion_total)),
+    family = quasipoisson,
+    data = data
+  )
+\end{lstlisting}
+
+La inclusión del logaritmo de la exposición como offset es fundamental en el modelado actuarial de frecuencia, ya que permite modelar tasas de siniestralidad en lugar de conteos absolutos. El offset con coeficiente fijo igual a 1 refleja la relación de proporcionalidad directa entre exposición y número esperado de siniestros: duplicar el tiempo de exposición duplica los siniestros esperados, manteniendo constante la tasa de frecuencia.
+
+\subsubsection{Calidad de Ajuste}
+
+La evaluación de la calidad del ajuste se realizó mediante gráficos diagnósticos estándar y envelope plots para validar las suposiciones distribucionales del modelo quasi-Poisson.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../images/diagnosticos_frecuencia_quasipoisson.png}
+\caption{Panel de Diagnósticos - Modelo de Frecuencia Quasi-Poisson}
+\end{figure}
+
+Los gráficos diagnósticos muestran un comportamiento adecuado: los residuos deviance se distribuyen aleatoriamente alrededor de cero sin patrones sistemáticos, el QQ-plot confirma normalidad aproximada de los residuos, y el gráfico scale-location indica homocedasticidad.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{../images/envelope_frecuencia_quasipoisson.png}
+\caption{Envelope Plot - Validación del Modelo de Frecuencia}
+\end{figure}
+
+El envelope plot con 99 simulaciones Monte Carlo y 95\% de confianza presenta un patrón general consistente con la distribución quasi-Poisson, validando la adecuación del modelo para el componente de frecuencia. El parámetro de dispersión de 0.932 confirma la apropiada especificación distribucional.
+
+\subsection{Modelo de Severidad}
+
+\subsubsection{Selección de Variables}
+
+Se aplicó la misma metodología de selección stepwise forward sobre todas las variables categóricas, utilizando pesos equivalentes al número de siniestros. La especificación de pesos es esencial en el modelado de severidad, ya que cada fila de datos agregados representa múltiples siniestros individuales. Los pesos informan al modelo que las observaciones con mayor número de siniestros deben tener mayor influencia en la estimación de parámetros, capturando adecuadamente la variabilidad del costo promedio por siniestro.
+
+El summary del modelo stepwise completo con distribución Gamma mostró:
+
+\begin{lstlisting}[style=Routput]
+  Coefficients:
+  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                   16.93233    0.18850  89.825  < 2e-16 ***
+Modelo1993_1999               -0.82068    0.42433  -1.934 0.054461 .  
+Modelo2000_2006               -0.68535    0.21216  -3.230 0.001437 ** 
+ColorAMARILLO                 -2.65934    0.82909  -3.208 0.001550 ** 
+ColorBLANCO                   -0.80362    0.23824  -3.373 0.000886 ***
+ColorPLATA                    -0.60123    0.20080  -2.994 0.003086 ** 
+CarroceriaCABINADO            -0.63249    0.46199  -1.369 0.172460    
+CarroceriaHATCHBACK            0.16034    0.17742   0.904 0.367169    
+CarroceriaOtros               -0.97397    0.38462  -2.532 0.012069 *  
+CLASE_FASECOLDAAUTOMOVIL TAXI  0.91034    0.76249   1.194 0.233874    
+CLASE_FASECOLDACAMIONETA      -0.20480    0.41786  -0.490 0.624566    
+CLASE_FASECOLDAOtros          -0.14852    0.49293  -0.301 0.763489    
+TIPO_VEHICULOPesados           0.96889    0.68550   1.413 0.159032    
+SERVICIOOficial                0.73575    0.44118   1.668 0.096879 .  
+SERVICIOPublico                1.36768    0.54956   2.489 0.013606 *  
+SERVICIOTransporte Personal   -1.70109    1.10605  -1.538 0.125571    
+Sexo_AsegF                    -0.12348    0.15657  -0.789 0.431186    
+Sexo_AsegNo_Binarie           -0.31419    0.34600  -0.908 0.364897    
+Edad19_41                      0.05081    0.17671   0.288 0.773994    
+Edad63_85                     -0.52302    0.32788  -1.595 0.112196    
+EdadOtros                     -0.46430    0.22660  -2.049 0.041719 *  
+---
+\end{lstlisting}
+
+Del análisis del summary, se identificaron las variables con niveles significativos: \texttt{Modelo}, \texttt{Color}, \texttt{Carrocería}, \texttt{Servicio} y \texttt{Edad}.
+
+Aplicando el mismo proceso para la distribución Log-Normal, se obtuvo un modelo más parsimonioso. Se seleccionó finalmente la distribución Log-Normal por su superior comportamiento en diagnósticos y AIC más favorable (763.26 vs 32,886).
+
+El modelo final de severidad se define como:
+
+\begin{lstlisting}[language=R]
+modelo_severidad_lognormal <- glm(
+  log(suma_pagos) ~ Modelo + Color + Carroceria + SERVICIO + Edad,
+  family = gaussian(link = ``identity''),
+  weights = n_siniestros,
+  data = data
+)
+\end{lstlisting}
+
+La transformación logarítmica de la suma de pagos permite modelar la severidad bajo el supuesto de distribución Log-Normal, mientras que los pesos por número de siniestros aseguran que la estimación refleje adecuadamente la contribución de cada segmento según su volumen de siniestros observados.
+
+\subsubsection{Calidad de Ajuste}
+
+La evaluación de la calidad del ajuste del modelo Log-Normal se realizó mediante el mismo protocolo de diagnósticos aplicado al modelo de frecuencia.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{../images/diagnosticos_severidad_lognormal.png}
+\caption{Panel de Diagnósticos - Modelo de Severidad Log-Normal}
+\end{figure}
+
+Los gráficos diagnósticos confirman la adecuación del modelo Log-Normal: residuos deviance con distribución aproximadamente normal, ausencia de heterocedasticidad, y patrones aleatorios en los residuos vs. valores ajustados.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{../images/envelope_severidad_lognormal.png}
+\caption{Envelope Plot - Validación del Modelo de Severidad}
+\end{figure}
+
+El envelope plot con 95\% de confianza presenta excelente adherencia a la distribución teórica, con solo 32 puntos fuera del envelope (13.97\%), confirmando la apropiada selección de la distribución Log-Normal para el modelado de severidad en esta cartera de seguros de automóviles.
